@@ -6,8 +6,7 @@ interface AuthLayouProps {
 
 const AuthLayout: FC<AuthLayouProps> = ({ children }) => {
   return (
-    <div>
-      Auth Layout
+    <div className="h-full flex items-center justify-center bg-sky-500">
       {children}
     </div>
   )
