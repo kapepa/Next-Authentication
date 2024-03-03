@@ -11,7 +11,7 @@ interface CardWrapperProps {
   children: ReactNode,
   headerLabel: string,
   backButtonLable: string,
-  backButtonHref: keyof typeof RoutingEnum,
+  backButtonHref: RoutingEnum,
   showSocial?: boolean,
 };
 

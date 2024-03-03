@@ -6,7 +6,7 @@ import { RoutingEnum } from "@/enum/routing.enum";
 import Link from "next/link";
 
 interface BackButtonProps {
-  href: keyof typeof RoutingEnum,
+  href: RoutingEnum,
   label: string,
 }
 
