@@ -1,11 +1,10 @@
+import { RegistrationForm } from "@/components/auth/registration-form";
 import { NextPage } from "next";
 
 const RegistrationPage: NextPage = () => {
   return (
-    <div>
-      RegistrationPage
-    </div>
+    <RegistrationForm/>
   )
-}
+};
 
 export default RegistrationPage;
