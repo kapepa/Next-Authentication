@@ -1,37 +1,39 @@
 "use client"
 
 import { FC, useCallback, useState, useTransition } from "react";
-import { CardWrapper } from "./card-wrapper";
-import { RoutingEnum } from "@/enum/routing.enum";
-import { LoginSchema } from "@/schemas";
-import { useForm } from "react-hook-form";
+import { RegistrationSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { z } from "zod";
-import { Button } from "../ui/button";
+import { useForm } from "react-hook-form";
+import { registration } from "@/actions/registration";
+import { CardWrapper } from "./card-wrapper";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
-import { login } from "@/actions/login";
+import { Button } from "../ui/button";
+import { RoutingEnum } from "@/enum/routing.enum";
 
-const LoginForm: FC = () => {
+const RegistrationForm: FC = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+
+  const form = useForm<z.infer<typeof RegistrationSchema>>({
+    resolver: zodResolver(RegistrationSchema),
     defaultValues: {
       email: "",
       password: "",
+      name: "",
     },
   })
 
-  const onSubmit = useCallback((values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = useCallback((values: z.infer<typeof RegistrationSchema>) => {
     setError(undefined);
     setSuccess(undefined);
 
     startTransition(() => {
-      login(values)
+      registration(values)
         .then((data) => {
           if(!!data.error) setError(data.error);
           if(!!data.success) setSuccess(data.success)
@@ -44,14 +46,35 @@ const LoginForm: FC = () => {
 
   return (
     <CardWrapper 
-      headerLabel="Welcome back"
-      backButtonLable="Don't have an account?"
-      backButtonHref={ RoutingEnum.Registration }
+      headerLabel="Create an account"
+      backButtonLable="Already have an account?"
+      backButtonHref={ RoutingEnum.Login }
       showSocial
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
+          <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input 
+                      {...field} 
+                      placeholder="******"
+                      type="text"
+                      disabled={isPending}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    This is your name.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="email"
@@ -101,11 +124,11 @@ const LoginForm: FC = () => {
             type="submit"
             className="w-full"
             disabled={isPending}
-          >Login</Button>
+          >Create an account</Button>
         </form>
       </Form>
     </CardWrapper>
   )
 }
 
-export { LoginForm };
+export { RegistrationForm };
