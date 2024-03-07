@@ -8,7 +8,7 @@ import bcrypt from "bcryptjs";
 
 export default {
   providers: [
-    GitHub,
+    // GitHub,
     CredentialsProvider({
       name: "Credentials",
       async authorize(credentials, req) {
