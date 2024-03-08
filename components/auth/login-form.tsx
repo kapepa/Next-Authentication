@@ -33,8 +33,8 @@ const LoginForm: FC = () => {
     startTransition(() => {
       login(values)
         .then((data) => {
-          if(!!data.error) setError(data.error);
-          if(!!data.success) setSuccess(data.success)
+          if(!!data?.error) setError(data.error);
+          if(!!data?.success) setSuccess(data.success)
         })
         .catch(() => {
           setError("Something went wrong!");
