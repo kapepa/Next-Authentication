@@ -4,7 +4,6 @@ import authConfig from "./auth.config"
 import { db } from "./lib/db"
 import { getUserByID } from "./data/user"
 import { UserRole } from "@prisma/client"
-import GitHub from "@auth/core/providers/github"
 
 export const { 
   handlers: { GET, POST }, 
@@ -22,6 +21,7 @@ export const {
       return true
     },
     async session({ session, user, token }) {
+      console.log(user)
       if(!!token.sub && !!session.user) session.user.id = token.sub;
       if(!!token.role && !!session.user) session.user.role = token.role as UserRole;
 
@@ -36,6 +36,12 @@ export const {
       token.role = existingUser.role;
 
       return token;
+    },
+    async redirect({url, baseUrl}) {
+      console.log('url', url);
+      console.log('baseUrl', baseUrl);
+      
+      return url.startsWith(baseUrl) ? url : baseUrl + '/protected/client';
     }
   },
   adapter: PrismaAdapter(db),
