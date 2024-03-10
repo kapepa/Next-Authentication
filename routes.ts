@@ -7,6 +7,7 @@ const publicRoutes = [
 const authRoutes = [
   RoutingEnum.Login,
   RoutingEnum.Registration,
+  RoutingEnum.Error,
 ] as string[];
 
 const apiAuthPrefix = "/api/auth";

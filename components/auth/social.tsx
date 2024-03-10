@@ -8,12 +8,10 @@ import { signIn } from "next-auth/react"
 
 const Social: FC = () => {
   const onClick = useCallback((social: SocialEnum) => {
-    signIn("github", { callbackUrl: "/settings" })
-    // signIn("google", { callbackUrl: "/settings" })
-    // switch (social) {
-    //   case SocialEnum.GITHUB : return signIn(SocialEnum.GITHUB);
-    //   case SocialEnum.GOOGLE : return signIn(SocialEnum.GOOGLE);
-    // }
+    switch (social) {
+      case SocialEnum.GITHUB : return signIn(SocialEnum.GITHUB);
+      case SocialEnum.GOOGLE : return signIn(SocialEnum.GOOGLE);
+    }
   }, []);
 
   return (
