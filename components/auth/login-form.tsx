@@ -28,7 +28,7 @@ const LoginForm: FC = () => {
       email: "",
       password: "",
     },
-  })
+  });
 
   const onSubmit = useCallback((values: z.infer<typeof LoginSchema>) => {
     setError(undefined);
