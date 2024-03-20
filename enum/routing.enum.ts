@@ -3,5 +3,6 @@ export enum RoutingEnum {
   Login = "/auth/login",
   Registration = "/auth/registration",
   Error = "/auth/error",
+  Verification = "/auth/new-verification",
   Settings = "/settings",
 }
