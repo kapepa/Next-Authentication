@@ -2,6 +2,7 @@ import { RoutingEnum } from "./enum/routing.enum";
 
 const publicRoutes = [
   RoutingEnum.Home,
+  RoutingEnum.Verification,
 ] as string[];
 
 const authRoutes = [

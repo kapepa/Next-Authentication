@@ -18,8 +18,8 @@ const login = async (values: z.infer<typeof LoginSchema>) => {
 
   const existingUser = await getUserByEmail(email);
 
-  if(!existingUser || !existingUser.email || ! existingUser.password) return { error: "Email does not exist!" };
-  if(!existingUser.emailVerified) {
+  if (!existingUser || !existingUser.email || ! existingUser.password) return { error: "Email does not exist!" };
+  if (!existingUser.emailVerified) {
     const verificationToken = await generateVerificationToken(existingUser.email);
 
     if(!!verificationToken) await sendVerificationToken(verificationToken?.email, verificationToken?.token);
@@ -31,7 +31,7 @@ const login = async (values: z.infer<typeof LoginSchema>) => {
     await signIn("credentials", { email, password, redirectTo: DEFAULT_LOGIN_REDIRECT })
   } catch (err) {
     if(err instanceof AuthError) {
-      switch(err.type) {
+      switch (err.type) {
         case "CredentialsSignin": return { error: "Invalid credentials!" };
         default: return { error: "Something went wrong!" };
       }
