@@ -1,6 +1,5 @@
 import { UserInt } from "@/interface/user";
 import { db } from "@/lib/db";
-import { Prisma } from "@prisma/client";
 
 const getUserByEmail = async (email: string) => {
   try {
@@ -22,9 +21,9 @@ const getUserByID = async (id: string) => {
   }
 }
 
-const updateUser = async (data: Prisma.UserDelegate<UserInt>) => {
+const updateUser = async (arg: { where: Partial<UserInt>, data: Partial<UserInt> }) => {
   try {
-    const user = await db.user.update();
+    const user = await db.user.update({ where: arg.where, data: arg.data });
 
     return user;
   } catch {
