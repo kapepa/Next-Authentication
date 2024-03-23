@@ -1,20 +1,53 @@
 "use client"
 
-import { FC, useCallback, useEffect } from "react";
+import { FC, useCallback, useLayoutEffect, useMemo, useState, useTransition } from "react";
 import { CardWrapper } from "./card-wrapper";
 import { RoutingEnum } from "@/enum/routing.enum";
 import { PuffLoader } from "react-spinners";
 import { useSearchParams } from "next/navigation";
+import { newVerification } from "@/actions/new-verification";
+import { FormSuccess } from "../form-success";
+import { FormError } from "../form-error";
 
 const NewVerificationForm: FC = () => {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
   const onSubmit = useCallback(() => {
-    console.log(token)
+    if(!token) return setError("Missing token!");
+
+    startTransition(() => {
+      newVerification(token)
+      .then(data => {
+        setSuccess(data.success);
+        setError(data.error)
+      })
+      .catch(() => setError("Something went wrong!"));
+    })
+
   }, [token]);
 
-  useEffect(() => {
+  const isSuccess = useMemo(() => {
+    if(!success) return null;
+
+    return <FormSuccess message={success} />
+  }, [success]);
+
+  const isError = useMemo(() => {
+    if(!error) return null;
+
+    return <FormError message={error} />
+  }, [error])
+
+  const isLoader = useMemo(() => {
+    if(isPending || !!error || !!success) return null;
+    return <PuffLoader />
+  }, [isPending, error, success]);
+
+  useLayoutEffect(() => {
     onSubmit();
   }, [onSubmit])
 
@@ -25,7 +58,9 @@ const NewVerificationForm: FC = () => {
       backButtonHref={RoutingEnum.Login}
     >
       <div className="flex items-center w-full justify-center">
-        <PuffLoader />
+        { isLoader }
+        { isSuccess }
+        { isError }
       </div>
     </CardWrapper>
   )

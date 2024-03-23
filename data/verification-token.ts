@@ -1,5 +1,6 @@
 import { VerificationTokenInt } from "@/interface/verification-token";
 import { db } from "@/lib/db";
+import { Prisma } from "@prisma/client"
 
 const getVerificationTokenByEmail = async (email: string) => {
   try {
@@ -45,5 +46,21 @@ const createVerificationToken = async (data: Omit<VerificationTokenInt, "id">) =
   }
 }
 
+const deleteVerificationToken = async ({ where }: { where: Prisma.VerificationTokenWhereUniqueInput }) => {
+  try {
+    const deleteToken = await db.verificationToken.delete({ where });
 
-export { getVerificationTokenByEmail, getVerificationTokenByToken, deleteVerificationTokenById, createVerificationToken };
+    return deleteToken;
+  } catch {
+    return null;
+  }
+}
+
+
+export { 
+  getVerificationTokenByEmail, 
+  getVerificationTokenByToken, 
+  createVerificationToken, 
+  deleteVerificationTokenById, 
+  deleteVerificationToken,
+};
