@@ -26,14 +26,13 @@ export const {
   },
   callbacks: {
     async signIn({ user, account }) {
-      console.log({ user, account })
       if(account && account.provider !== "credentials") return true;
       if(!user.id) return false;
 
       const existingUser = await getUserByID(user.id);
-      if(!existingUser || existingUser.emailVerified) return false;
+      if(!existingUser || !existingUser.emailVerified) return false;
 
-      return true
+      return true;
     },
     async session({ session, user, token }) {
       if(!!token.sub && !!session.user) session.user.id = token.sub;
