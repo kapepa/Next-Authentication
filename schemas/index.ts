@@ -1,5 +1,17 @@
 import { z } from "zod";
 
+const ResetSchema = z.object({
+  email: z
+  .string({ invalid_type_error: "Email should be a string" })
+  .email({ message: "Email is required" })
+});
+
+const NewPasswordSchema = z.object({
+  password: z
+  .string({ invalid_type_error: "Email should be a string" })
+  .min(6, { message: "Minimus 6 characters required" })
+});
+
 const LoginSchema = z.object({
   email: z.string(
     { invalid_type_error: "Email should be a string" }
@@ -27,4 +39,4 @@ const RegistrationSchema = z.object({
 
 
 
-export { LoginSchema, RegistrationSchema }
+export { LoginSchema, RegistrationSchema, ResetSchema, NewPasswordSchema }
