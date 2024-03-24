@@ -14,4 +14,15 @@ const sendVerificationToken = async (email: string, token: string) => {
   });
 };
 
-export { sendVerificationToken };
+const sendPassowrdResetEmail = async (email: string, token: string) => {
+  const resetLink: string = `${process.env.NEXT_PUBLIC_APP_URL}/${RoutingEnum.NewPassword}?token=${token}`
+
+  const { data, error } = await resend.emails.send({
+    from: 'Acme <onboarding@resend.dev>',
+    to: [email],
+    subject: 'Reset your password.',
+    html: `<p>Click <a href="${resetLink}">here</a> to reset password.</p>`
+  });
+};
+
+export { sendVerificationToken, sendPassowrdResetEmail };
