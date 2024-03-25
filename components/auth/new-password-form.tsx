@@ -12,7 +12,6 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
-import { reset } from "@/actions/reset";
 import { useSearchParams } from "next/navigation";
 import { newPassword } from "@/actions/new-password";
 
