@@ -1,8 +1,9 @@
 import { db } from "@/lib/db";
+import { Prisma } from "@prisma/client";
 
 const getTwoFactorTokenByToken = async (token: string) => {
   try {
-    const twoFactorToken = await db.towFactorToken.findUnique({ where: { token } });
+    const twoFactorToken = await db.twoFactorToken.findUnique({ where: { token } });
 
     return twoFactorToken;
   } catch {
@@ -12,7 +13,7 @@ const getTwoFactorTokenByToken = async (token: string) => {
 
 const getTwoFactorTokenByEmail = async (email: string) => {
   try {
-    const twoFactorToken = await db.towFactorToken.findUnique({ where: { email } });
+    const twoFactorToken = await db.twoFactorToken.findUnique({ where: { email } });
 
     return twoFactorToken;
   } catch {
@@ -20,9 +21,9 @@ const getTwoFactorTokenByEmail = async (email: string) => {
   }
 };
 
-const deleteTwoFactorToken = async (arg) => {
+const deleteTwoFactorToken = async (arg: Prisma.TwoFactorTokenDeleteArgs) => {
   try {
-    const deleteTwoFactor = await db.towFactorToken.delete(arg);
+    const deleteTwoFactor = await db.twoFactorToken.delete(arg);
 
     return deleteTwoFactor;
   } catch {
@@ -30,4 +31,14 @@ const deleteTwoFactorToken = async (arg) => {
   }
 }
 
-export { getTwoFactorTokenByToken, getTwoFactorTokenByEmail, deleteTwoFactorToken }
+const createTwoFactorToken = async (arg: Prisma.TwoFactorTokenCreateArgs) => {
+  try {
+    const createTwoFactor = await db.twoFactorToken.create(arg);
+
+    return createTwoFactor;
+  } catch { 
+    return null;
+  }
+}
+
+export { getTwoFactorTokenByToken, getTwoFactorTokenByEmail, deleteTwoFactorToken, createTwoFactorToken }
