@@ -41,7 +41,7 @@ model User {
   role                  UserRole   @default(USER)
   accounts              Account[]
   isTwoFactorEnabled    Boolean @default(false)
-  towFactorConfirmation TowFactorConfirmation?
+  towFactorConfirmation TwoFactorConfirmation?
 }
 
 model VerificationToken {
@@ -62,7 +62,7 @@ model PasswordResetToken {
   @@unique([email, token])
 }
 
-model TowFactorToken {
+model TwoFactorToken {
   id      String     @id @default(cuid())
   email   String     @unique
   token   String     @unique
@@ -71,11 +71,11 @@ model TowFactorToken {
   @@unique([email, token])
 }
 
-model TowFactorConfirmation {
+model TwoFactorConfirmation {
   id      String  @id @default(cuid())
+  
   userId  String  
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
 
   @@unique([userId])
 }

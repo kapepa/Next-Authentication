@@ -1,18 +1,17 @@
-import { auth, signOut } from "@/auth";
-import { NextPage } from "next";
+'use client'
 
-const SettingsPage: NextPage = async () => {
-  const session = await auth();
+import { logout } from "@/actions/logout";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { NextPage } from "next";
+import { useSession } from "next-auth/react"
+
+const SettingsPage: NextPage = () => {
+  const user = useCurrentUser()
+  const onClock = () => { logout() }
 
   return (
-    <div>
-      {JSON.stringify(session)}
-      <form action={async () => {
-        "use server"
-        await signOut();
-      }}>
-        <button type="submit" >Sign out</button>
-      </form>
+    <div className="bg-white p-10 rounded-xl">
+      <button onClick={onClock}>Sign out</button>
     </div>
   )
 }

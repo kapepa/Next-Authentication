@@ -5,6 +5,7 @@ import { db } from "./lib/db"
 import { getUserByID } from "./data/user"
 import { UserRole } from "@prisma/client"
 import { RoutingEnum } from "./enum/routing.enum"
+import { deleteFactorConfirmation, twoFactorConfirmationByUserId } from "./data/two-factor-confirmation"
 
 export const { 
   handlers: { GET, POST }, 
@@ -31,6 +32,14 @@ export const {
 
       const existingUser = await getUserByID(user.id);
       if(!existingUser || !existingUser.emailVerified) return false;
+
+      if(existingUser.isTwoFactorEnabled) {
+        const twoFactorConfirmation = await twoFactorConfirmationByUserId(existingUser.id);
+
+        if(!twoFactorConfirmation) return false;
+
+        await deleteFactorConfirmation({ where: { id: twoFactorConfirmation.id } })
+      };
 
       return true;
     },
