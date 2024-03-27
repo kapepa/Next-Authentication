@@ -7,4 +7,7 @@ export enum RoutingEnum {
   Error = "/auth/error",
   Verification = "/auth/new-verification",
   Settings = "/settings",
+  Server = "/server",
+  Client = "/client",
+  Admin = "/admin",
 }
