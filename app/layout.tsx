@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 const poppins = Inter({ subsets: ["latin"], weight: ['400', '600'], });
@@ -23,7 +24,10 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang="en">
-        <body className={cn(inter.className, poppins.className)}>{children}</body>
+        <body className={cn(inter.className, poppins.className)}>
+          {children}
+          <Toaster />
+        </body>
       </html>
     </SessionProvider>
   );
