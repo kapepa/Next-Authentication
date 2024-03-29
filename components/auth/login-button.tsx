@@ -3,6 +3,8 @@
 import { RoutingEnum } from "@/enum/routing.enum";
 import { useRouter } from "next/navigation";
 import { FC, ReactNode, useCallback } from "react"
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import { LoginForm } from "./login-form";
 
 enum ModeEnum {
   modal = "modal",
@@ -25,9 +27,14 @@ const LoginButton: FC<LoginButtonProps> = (props) => {
 
   if(mode === ModeEnum.modal) {
     return (
-      <span>
-        TODO: Implement modal.
-      </span>
+      <Dialog>
+        <DialogTrigger asChild>
+          {children}
+        </DialogTrigger>
+        <DialogContent className="p-0 w-auto bg-transparent border-none">
+          <LoginForm/>
+        </DialogContent>
+      </Dialog>
     )
   }
 

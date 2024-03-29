@@ -2,9 +2,10 @@ import { RoutingEnum } from '@/enum/routing.enum';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const domain = process.env.NEXT_PUBLIC_APP_URL;
 
 const sendVerificationToken = async (email: string, token: string) => {
-  const confirmLink: string = `${process.env.NEXT_PUBLIC_APP_URL}${RoutingEnum.Verification}?token=${token}`
+  const confirmLink: string = `${domain}${RoutingEnum.Verification}?token=${token}`
 
   const { data, error } = await resend.emails.send({
     from: 'Acme <onboarding@resend.dev>',
@@ -15,7 +16,7 @@ const sendVerificationToken = async (email: string, token: string) => {
 };
 
 const sendPassowrdResetEmail = async (email: string, token: string) => {
-  const resetLink: string = `${process.env.NEXT_PUBLIC_APP_URL}${RoutingEnum.NewPassword}?token=${token}`
+  const resetLink: string = `${domain}${RoutingEnum.NewPassword}?token=${token}`
 
   const { data, error } = await resend.emails.send({
     from: 'Acme <onboarding@resend.dev>',
