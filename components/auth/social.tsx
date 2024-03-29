@@ -17,7 +17,7 @@ const Social: FC = () => {
       case SocialEnum.GITHUB : return signIn(SocialEnum.GITHUB, { callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT });
       case SocialEnum.GOOGLE : return signIn(SocialEnum.GOOGLE, { callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT });
     }
-  }, []);
+  }, [callbackUrl]);
 
   return (
     <div className="flex items-center w-full gap-x-2">

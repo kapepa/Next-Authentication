@@ -56,7 +56,8 @@ const LoginForm: FC = () => {
           setError("Something went wrong!");
         })
     });
-  }, []);
+
+  }, [callbackUrl, form]);
 
   return (
     <CardWrapper 

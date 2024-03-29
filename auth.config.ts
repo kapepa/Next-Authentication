@@ -6,6 +6,7 @@ import type { NextAuthConfig } from "next-auth"
 import { LoginSchema } from "./schemas";
 import { getUserByEmail } from "./data/user";
 import bcrypt from "bcryptjs";
+import { User } from "@prisma/client";
 
 export default {
   providers: [
@@ -19,7 +20,7 @@ export default {
     }),
     CredentialsProvider({
       name: "credentials",
-      async authorize(credentials, req) {
+      async authorize(credentials, req): Promise<any | null> {
         const validateFields = LoginSchema.safeParse(credentials);
   
         if (validateFields.success) {
@@ -33,10 +34,11 @@ export default {
           if(passwordMatch) return existingUser;
 
           return null;
+          
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
           return null
-  
+
           // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
       }
