@@ -56,7 +56,7 @@ const SettingsPage: NextPage = () => {
         setError("Something went wrong!");
       })
     })
-  }, [settings])
+  }, [update])
 
   return (
     <Card className="w-[600px] shadow-md">

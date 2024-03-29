@@ -6,6 +6,7 @@ import type { NextAuthConfig } from "next-auth"
 import { LoginSchema } from "./schemas";
 import { getUserByEmail } from "./data/user";
 import bcrypt from "bcryptjs";
+import { User } from "@prisma/client";
 
 export default {
   providers: [
@@ -19,7 +20,7 @@ export default {
     }),
     CredentialsProvider({
       name: "credentials",
-      async authorize(credentials, req) {
+      async authorize(credentials, req): Promise<any | null> {
         const validateFields = LoginSchema.safeParse(credentials);
   
         if (validateFields.success) {

@@ -23,7 +23,7 @@ const LoginButton: FC<LoginButtonProps> = (props) => {
 
   const onClick = useCallback(() => {
     router.push(RoutingEnum.Login);
-  }, []);
+  }, [router]);
 
   if(mode === ModeEnum.modal) {
     return (
