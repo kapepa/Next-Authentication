@@ -5,11 +5,13 @@ declare module "next-auth" {
   interface Session {
     user: {
       role: UserRole
-      isTwoFactorEnabled: Boolean
+      isTwoFactorEnabled: Boolean,
+      isOAuth: Boolean
     } & DefaultSession["user"]
   }
   interface User {
     role: UserRole
-    isTwoFactorEnabled: Boolean
+    isTwoFactorEnabled: Boolean,
+    isOAuth: Boolean
   }
 }
