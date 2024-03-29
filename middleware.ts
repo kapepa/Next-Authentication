@@ -20,7 +20,14 @@ export default auth((req) => {
     return undefined;
   }
 
-  if(!isLoggedIn && !isPublicRoute) return Response.redirect(new URL(RoutingEnum.Login, nextUrl));
+  if(!isLoggedIn && !isPublicRoute) {
+    let callbackUrl = nextUrl.pathname;
+    if(nextUrl.search) callbackUrl += nextUrl.search;
+
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+
+    return Response.redirect(new URL(`${RoutingEnum.Login}?callbackUrl=${encodedCallbackUrl}`, nextUrl));
+  }
 
   return undefined;
 })
