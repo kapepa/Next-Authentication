@@ -31,4 +31,24 @@ const updateUser = async ( { where, data }:{ where: Prisma.UserWhereUniqueInput,
   }
 }
 
-export { getUserByEmail, getUserByID, updateUser };
+const findOneUser = async (arg: Prisma.UserFindFirstArgs) => {
+  try {
+    const user = await db.user.findFirst(arg);
+
+    return user;
+  } catch {
+    return null;
+  }
+}
+
+const updateOneUser = async (arg: Prisma.UserUpdateArgs) => {
+  try {
+    const user = await db.user.update(arg);
+
+    return user;
+  } catch {
+    return null;
+  }
+}
+
+export { getUserByEmail, getUserByID, updateUser, findOneUser, updateOneUser };
